@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172b35">
+<title>選擇之後 — 人生的另一種可能</title>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#20313a; --muted:#66777d; --paper:#fbf8f1; --card:#fffdf8;
+  --teal:#2d6665; --teal-dark:#204c4c; --gold:#c08a45; --line:#e7dfd1;
+  --shadow:0 18px 50px rgba(30,48,52,.10); --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(160deg,#e8efeb 0%,#f7f1e6 42%,#f4eee5 100%);color:var(--ink);
+  font-family:ui-serif,"Noto Serif TC","PingFang TC","Microsoft JhengHei",serif;line-height:1.85}
+button{font:inherit}
+.page{width:min(920px,calc(100% - 32px));margin:0 auto;padding:30px 0 64px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:16px;color:var(--muted);font:600 .78rem/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.pill{border:1px solid #cbd8d1;border-radius:999px;padding:7px 12px;background:#ffffff80}
+.hero{padding:48px 0 28px}
+.eyebrow{color:var(--teal);font:700 .82rem system-ui,sans-serif;letter-spacing:.18em}
+h1{font-size:clamp(2.15rem,6vw,4rem);line-height:1.18;letter-spacing:.04em;margin:12px 0}
+.subtitle{font-size:1.08rem;color:var(--muted);margin:0;max-width:650px}
+.progress-wrap{margin:24px 0 0;display:flex;align-items:center;gap:12px;font:600 .8rem system-ui,sans-serif;color:var(--muted)}
+.progress{height:6px;background:#dce4de;border-radius:99px;flex:1;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:var(--teal);border-radius:99px;transition:width .35s ease}
+main{min-height:360px}
+.story-card{background:var(--card);border:1px solid #eee6d9;border-radius:var(--radius);padding:clamp(24px,5vw,48px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.story-card:before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,var(--teal),#a9b99e,var(--gold))}
+.chapter{font:700 .78rem system-ui,sans-serif;letter-spacing:.15em;color:var(--gold);margin-bottom:12px}
+h2{font-size:clamp(1.5rem,4vw,2.15rem);line-height:1.35;margin:0 0 20px}
+.story p{margin:0 0 16px;font-size:1.04rem}
+.story p:last-child{margin-bottom:0}
+.quote{margin:24px 0;padding:18px 22px;border-left:3px solid var(--gold);background:#f7f3e9;color:#4b5553;font-size:1.16rem}
+.choices{display:grid;gap:12px;margin-top:30px}
+.choice{width:100%;display:flex;align-items:flex-start;gap:15px;text-align:left;border:1px solid #d9e2dc;border-radius:16px;background:#fff;padding:17px 18px;color:var(--ink);cursor:pointer;transition:transform .18s,border-color .18s,background .18s}
+.choice:hover{border-color:var(--teal);background:#f3f8f4;transform:translateY(-2px)}
+.choice:focus-visible,.action:focus-visible{outline:3px solid #d59a4d;outline-offset:3px}
+.choice-key{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#e8f0eb;color:var(--teal-dark);font:700 .9rem system-ui,sans-serif}
+.choice strong{display:block;font-size:1.02rem;margin-bottom:3px}
+.choice small{display:block;color:var(--muted);font-size:.88rem;line-height:1.6}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.action{border:0;border-radius:999px;padding:12px 20px;background:var(--teal);color:white;font:700 .92rem system-ui,sans-serif;cursor:pointer}
+.action:hover{background:var(--teal-dark)}
+.action.secondary{background:transparent;color:var(--teal-dark);border:1px solid #b9cbc1}
+.action.secondary:hover{background:#eef4ef}
+.outcome{margin-top:24px;padding:18px 20px;border-radius:15px;background:#f2f5ef;border:1px solid #dce6da}
+.outcome h3{margin:0 0 8px;font-size:1.05rem}
+.outcome p{margin:0;color:#52615d}
+.ending-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+.ending-box{padding:17px;border-radius:15px;background:#f7f3e9;border:1px solid var(--line)}
+.ending-box h3{font:700 .8rem system-ui,sans-serif;letter-spacing:.08em;margin:0 0 8px;color:var(--teal)}
+.ending-box p{margin:0;font-size:.94rem}
+.reflection{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.reflection h3{margin:0 0 10px;font-size:1.25rem}
+.reflection p{margin:0 0 12px}
+.footer{text-align:center;color:var(--muted);font: .78rem/1.7 system-ui,sans-serif;margin-top:24px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:560px){
+ .page{width:min(100% - 22px,920px);padding-top:18px}
+ .hero{padding:35px 0 22px}
+ .story-card{padding:25px 20px}
+ .ending-grid{grid-template-columns:1fr}
+ .choice{padding:15px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topline"><span>共教國文・志於己</span><span class="pill">我的人生篇</span></div>
+  <header class="hero">
+    <div class="eyebrow">INTERACTIVE STORY · 人生分岔</div>
+    <h1>選擇之後</h1>
+    <p class="subtitle">人生的另一種可能｜每一條路都有收穫，也都有必須承擔的代價。</p>
+    <div class="progress-wrap" aria-label="故事進度"><span id="progressText">序章</span><div class="progress"><span id="progressBar"></span></div><span id="progressCount">0 / 3</span></div>
+  </header>
+  <main id="game" aria-live="polite">
+    <section class="story-card">
+      <div class="chapter">序章・那本舊日記</div>
+      <h2>如果人生可以重新選擇，你會走上哪一條路？</h2>
+      <div class="story">
+        <p>嘉寶出生於平凡的家庭。從小，他就希望靠自己的努力過上更好的生活，讓未來有更多可能。然而，年紀漸長，他才發現人生並不像想像中簡單：每一次決定，都可能把自己帶往不同的方向。</p>
+        <p>某天整理房間時，他在舊紙箱底部發現一本泛黃的日記。封面沒有署名，只有一道深色的折痕。他翻開第一頁，看見一行字：</p>
+        <div class="quote">「如果人生可以重新選擇，你會走上哪一條路？」</div>
+        <p>嘉寶不知道這本日記從何而來，但他決定把它帶在身邊。接下來的日子裡，三個難題將接連出現，而每一次選擇，都會留下無法抹去的痕跡。</p>
+      </div>
+      <div class="actions"><button class="action" id="startBtn">翻開日記，開始旅程</button></div>
+    </section>
+  </main>
+  <div class="footer">你的選擇會改變嘉寶的故事。沒有完美的道路，只有願意承擔的決定。</div>
+</div>
+<script>
+const game = document.getElementById('game');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const progressCount = document.getElementById('progressCount');
+const state = {choices:[], step:0};
+const scenes = {
+  wallet:{
+    label:'第一岔路・誠實與利益', title:'意外撿到錢包',
+    paragraphs:[
+      '某天傍晚，嘉寶在回家的路上發現一個黑色皮夾。打開一看，裡面有一大筆現金，還有失主的身分證。',
+      '他最近正為房租與生活費煩惱。這筆錢或許能讓他暫時喘口氣，但他也明白，錢包的主人一定正在尋找它。'
+    ],
+    choices:[
+      {key:'A',title:'歸還錢包',desc:'透過身分證尋找失主，把錢包完整交還。',next:'walletReturn'},
+      {key:'B',title:'留下錢包',desc:'留下現金，先解決眼前的經濟困難。',next:'walletKeep'}
+    ]
+  },
+  friend:{
+    label:'第二岔路・友情與正義',title:'朋友的秘密',
+    paragraphs:[
+      '一段時間後，嘉寶最好的朋友因一時衝動做了傷害他人的事。朋友十分害怕受到懲罰，請求嘉寶幫忙隱瞞真相，還保證絕不再犯。',
+      '嘉寶想起第一次選擇帶來的結果。他知道，這次不只是朋友之間的事，還有受到傷害的人正在等待一個交代。'
+    ],
+    choices:[
+      {key:'A',title:'保護朋友',desc:'替朋友保守秘密，維持兩人多年的情誼。',next:'friendHide'},
+      {key:'B',title:'說出真相',desc:'讓事情被如實了解，請朋友承擔責任。',next:'friendTruth'}
+    ]
+  },
+  family:{
+    label:'第三岔路・金錢與親情',title:'遠方的工作邀請',
+    paragraphs:[
+      '又過了幾年，嘉寶收到一份高薪工作的邀請。這份工作能帶來更好的收入與發展，但需要長時間加班，甚至得離開家人一段時間。',
+      '家人沒有要求他留下，只說無論他怎麼決定，都會支持他。嘉寶看著餐桌旁熟悉的座位，想起那些平凡卻珍貴的日常。'
+    ],
+    choices:[
+      {key:'A',title:'接受高薪工作',desc:'把握事業機會，接受長工時與離家的代價。',next:'work'},
+      {key:'B',title:'留在家人身邊',desc:'選擇較能兼顧生活的工作，珍惜相處時光。',next:'home'}
+    ]
+  }
+};
+const branchScenes = {
+ walletReturn:{
+  label:'第一個選擇・歸還之後',title:'一份意外的邀請',
+  paragraphs:['嘉寶依照證件上的資料聯絡失主，並把錢包完整歸還。失主確認現金一分不少，連聲向他道謝。','嘉寶的經濟問題並沒有立刻消失，但那天晚上，他睡得格外安穩。幾天後，失主主動聯絡他，表示自己經營的公司正在尋找兼職人員，邀請他前去了解工作機會。'],
+  note:'他沒有因為誠實而立刻得到財富，卻意外得到一扇新的機會之門。'
+ },
+ walletKeep:{
+  label:'第一個選擇・留下之後',title:'無法安心的收穫',
+  paragraphs:['嘉寶留下現金，丟棄皮夾。房租和生活費暫時有了著落，他也買下了想要很久的東西。那幾天，他告訴自己只是先度過難關。','幾天後，他在網路上看到失主焦急尋找錢包的消息，才知道那筆錢是對方準備支付家人醫療費用的積蓄。嘉寶開始感到愧疚，也害怕自己的行為被發現。'],
+  note:'眼前的困難暫時減輕了，但他開始承受一份看不見、也難以放下的重量。'
+ },
+ friendHide:{
+  label:'第二個選擇・保守秘密',title:'越來越沉重的沉默',
+  paragraphs:['嘉寶答應替朋友保密。朋友暫時避開了責任，兩人的關係也變得更加親近，朋友甚至說嘉寶是唯一願意站在自己這邊的人。','然而，事情沒有因此消失。每當有人提起受害者的處境，嘉寶就得再次隱瞞；朋友也沒有真正面對自己的錯誤。'],
+  note:'他保住了友情表面的平靜，卻讓沉默成為兩人之間一道新的隔閡。'
+ },
+ friendTruth:{
+  label:'第二個選擇・說出真相',title:'友情出現裂痕',
+  paragraphs:['嘉寶決定如實說出自己知道的事。朋友得知後非常生氣，認為嘉寶背叛了自己，兩人的友情因此產生裂痕。','另一方面，受到傷害的人終於得到公平對待。嘉寶明白，朋友需要的或許不是替他遮掩，而是有人提醒他承擔責任，並有機會改正。'],
+  note:'他可能失去一段重要的友情，卻沒有讓另一個人的委屈被忽略。'
+ },
+ work:{
+  label:'第三個選擇・接受工作',title:'遠方的成就與缺席',
+  paragraphs:['嘉寶接受了高薪工作，搬到另一座城市。收入逐漸增加，工作也讓他累積了經驗與成就。','只是，家人的生日、週末的晚餐和一些臨時的小事，他常常只能透過電話得知。當他終於有空回家，才發現有些日常已經悄悄改變。'],
+  note:'他換來經濟上的餘裕與職涯機會，也付出了陪伴時間減少的代價。'
+ },
+ home:{
+  label:'第三個選擇・留在家人身邊',title:'平凡日子裡的珍貴',
+  paragraphs:['嘉寶婉拒了那份高薪工作，選擇一份收入較穩定、時間也較能安排的工作。生活沒有突然變得寬裕，但他能常常回家吃飯，也能在家人需要時陪在身旁。','偶爾看見同學在職場上快速升遷，他也會想像另一種人生。不過，當一家人坐在餐桌旁分享一天的大小事，他知道這些時光同樣值得珍惜。'],
+  note:'他放棄部分收入與發展速度，換來更多共同生活的時刻。'
+ }
+};
+function updateProgress(){
+ const n=state.choices.length; progressBar.style.width=(n/3*100)+'%';
+ progressCount.textContent=n+' / 3';
+ progressText.textContent=['序章','第一個抉擇','第二個抉擇','最後的抉擇'][n];
+}
+function renderScene(scene, showChoices=true, callback=null){
+ const paras=scene.paragraphs.map(p=>`<p>${p}</p>`).join('');
+ const choices=showChoices?`<div class="choices">${scene.choices.map(c=>`<button class="choice" data-next="${c.next}" aria-label="${c.key}：${c.title}"><span class="choice-key">${c.key}</span><span><strong>${c.title}</strong><small>${c.desc}</small></span></button>`).join('')}</div>`:'';
+ game.innerHTML=`<section class="story-card"><div class="chapter">${scene.label}</div><h2>${scene.title}</h2><div class="story">${paras}</div>${scene.note?`<div class="outcome"><h3>這條路留下的痕跡</h3><p>${scene.note}</p></div>`:''}${choices}${callback?`<div class="actions"><button class="action" id="continueBtn">${callback.label}</button></div>`:''}</section>`;
+ game.querySelectorAll('[data-next]').forEach(btn=>btn.addEventListener('click',()=>choose(btn.dataset.next)));
+ if(callback) document.getElementById('continueBtn').addEventListener('click',callback.run);
+}
+function choose(next){
+ state.choices.push(next); state.step++;
+ updateProgress();
+ const scene=branchScenes[next];
+ if(state.step===1){
+   renderScene(scene,false,{label:'繼續面對下一個抉擇',run:()=>renderScene(scenes.friend)});
+ } else if(state.step===2){
+   renderScene(scene,false,{label:'翻到日記的最後一頁',run:()=>renderScene(scenes.family)});
+ } else {
+   renderScene(scene,false,{label:'看看多年以後的自己',run:showEnding});
+ }
+}
+function showEnding(){
+ updateProgress();
+ const c=state.choices;
+ const names={walletReturn:'歸還錢包',walletKeep:'留下錢包',friendHide:'保護朋友',friendTruth:'說出真相',work:'接受高薪工作',home:'陪伴家人'};
+ const gain=[],cost=[];
+ if(c[0]==='walletReturn'){gain.push('誠實的品格、失主的感謝與他人的信任');cost.push('立即改善經濟困難的機會');}
+ else{gain.push('暫時改善生活的金錢');cost.push('內心的平靜，以及失主原本寄託在這筆錢上的希望');}
+ if(c[1]==='friendHide'){gain.push('朋友暫時的信任與陪伴');cost.push('受害者獲得公平對待的機會，也讓自己背負隱瞞的壓力');}
+ else{gain.push('維護公平的勇氣與自我肯定');cost.push('朋友一時的信任，甚至多年友情');}
+ if(c[2]==='work'){gain.push('較高收入、工作經驗與職涯發展');cost.push('陪伴家人的時間，以及一些無法重來的日常');}
+ else{gain.push('與家人相處的時光和共同回憶');cost.push('部分收入與更快的職涯發展機會');}
+ const integrity=c[0]==='walletReturn'&&c[1]==='friendTruth';
+ const loyalty=c[0]==='walletKeep'&&c[1]==='friendHide';
+ const title=integrity?'結局一：正直的人生':loyalty?'結局二：利益與友情':'結局三：由自己寫下的答案';
+ const summary=integrity
+ ?'多年以後，嘉寶成為一個值得他人信任的人。他獲得失主的感謝、他人的尊重，以及內心的平靜；但他也曾為堅持原則付出金錢與友情的代價。'
+ :loyalty
+ ?'多年以後，嘉寶曾靠留下的錢暫時改善生活，也保留了與朋友的情誼。然而，失主的遭遇與那段被隱瞞的真相，仍偶爾讓他感到愧疚。'
+ :'多年以後，嘉寶回望這三次選擇，發現自己走出了一條不完全符合任何標準答案的路。有些決定帶來了機會，有些決定留下遺憾；重要的是，他開始看清自己願意守護什麼，也願意為此承擔什麼。';
+ const lesson=integrity?'做出自己認為正直的選擇，不一定能得到所有人的理解，但能讓自己無愧於心。'
+ :loyalty?'眼前的利益與友情固然重要，但如果必須犧牲良心，得到的一切也未必真正值得。'
+ :'人生沒有一張適用所有人的標準答案。價值觀是在一次次選擇與承擔中逐漸形成的；理解代價，才能更清楚地認識自己。';
+ game.innerHTML=`<section class="story-card"><div class="chapter">終章・多年以後</div><h2>${title}</h2><div class="story"><p>${summary}</p><p>嘉寶走過的三個選擇是：${c.map(x=>names[x]).join('、')}。這些決定沒有讓他得到所有想要的東西，卻共同形塑了今天的他。</p></div><div class="ending-grid"><div class="ending-box"><h3>獲得</h3><p>${gain.join('；')}。</p></div><div class="ending-box"><h3>失去</h3><p>${cost.join('；')}。</p></div></div><div class="reflection"><h3>人生體悟</h3><p>${lesson}</p><h3>文本對話｜許芳宜〈追尋與自我形成〉</h3><p>許芳宜的〈追尋與自我形成〉讓我思考，一個人如何透過不同的人生經歷與選擇，逐漸認識自己，並建立自己的價值觀。</p><p>嘉寶並不是一開始就知道自己想成為什麼樣的人。他在金錢、友情、正義與親情之間做出選擇，也在每一次選擇後看見收穫與代價。玩家的選擇改變了故事，也讓嘉寶逐漸理解自己真正珍惜的事物。</p><p>這呼應了文本中追尋自我與自我形成的概念：人是在一次次經歷、反思與承擔中，逐漸認識自己，並形成真正的自己。</p></div><div class="actions"><button class="action" id="restartBtn">重新翻開日記</button><button class="action secondary" id="reviewBtn">查看我的選擇</button></div><div id="review" class="outcome" hidden></div></section>`;
+ document.getElementById('restartBtn').addEventListener('click',restart);
+ document.getElementById('reviewBtn').addEventListener('click',()=>{
+  const box=document.getElementById('review');box.hidden=!box.hidden;
+  box.innerHTML='<h3>你的三次選擇</h3><p>'+c.map((x,i)=>['第一岔路','第二岔路','第三岔路'][i]+'：'+names[x]).join('<br>')+'</p>';
+ });
+}
+function restart(){state.choices=[];state.step=0;updateProgress();renderScene(scenes.wallet);}
+document.getElementById('startBtn').addEventListener('click',()=>{renderScene(scenes.wallet);window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+updateProgress();
+</script>
+</body>
+</html>
